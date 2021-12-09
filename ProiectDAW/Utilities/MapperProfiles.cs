@@ -10,7 +10,7 @@ namespace ProiectDAW.Profiles
         public MapperProfiles()
         {
             CreateMap<DirectSigninUserDTO, User>()
-                .ForMember(user => user.DirectLoginUser, opt => opt.MapFrom(src => new DirectLoginUser { PasswordHash = src.Password }))
+                .ForMember(user => user.DirectLoginUser, opt => opt.MapFrom(src => new DirectLoginUser { PasswordHash = BCrypt.Net.BCrypt.HashPassword(src.Password) }))
                 .ForMember(user => user.UserSettings, opt => opt.MapFrom(src => UserSettings.DEFAULT_SETTINGS));
         }
     }

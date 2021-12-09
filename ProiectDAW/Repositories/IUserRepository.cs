@@ -6,5 +6,7 @@ namespace ProiectDAW.Repositories
     public interface IUserRepository : IGenericRepository<User>
     {
         Task<bool> ExistsByEmail(string email);
+
+        Task<User> FindByEmail(string email);
     }
 }

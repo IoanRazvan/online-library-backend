@@ -16,5 +16,10 @@ namespace ProiectDAW.Repositories
         {
             return await _table.AsNoTracking().Where(user => user.Email.Equals(email)).AnyAsync();
         }
+
+        public async Task<User> FindByEmail(string email)
+        {
+            return await _table.AsNoTracking().Include(user => user.DirectLoginUser).FirstOrDefaultAsync(user => user.Email.Equals(email));
+        }
     }
 }
