@@ -1,4 +1,5 @@
 ﻿using ProiectDAW.Models.Base;
+using System;
 
 namespace ProiectDAW.Models
 {
@@ -6,6 +7,7 @@ namespace ProiectDAW.Models
     {
         public bool RememberPageNumber { get; set; }
 
+        public Guid UserId { get; set; }
         public User User { get; set; }
 
         public readonly static UserSettings DEFAULT_SETTINGS = new() { RememberPageNumber = false };

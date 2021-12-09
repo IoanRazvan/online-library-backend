@@ -10,8 +10,9 @@ namespace ProiectDAW.Models
         public string LastName { get; set; }
         public string Email { get; set; }
         public UserSettings UserSettings { get; set; }
-        public Guid UserSettingsId { get; set; }
+
         public DirectLoginUser DirectLoginUser { get; set; }
+
         public ICollection<Book> Uploads { get; set; }
 
         public ICollection<Review> Reviews { get; set; }
