@@ -2,7 +2,7 @@
 
 namespace ProiectDAW.DTOs
 {
-    public class DirectLoginUserDTO
+    public class DirectSigninUserDTO
     {
         [Required]
         public string FirstName { get; set; }

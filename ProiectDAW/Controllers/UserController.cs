@@ -21,7 +21,7 @@ namespace ProiectDAW.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] DirectLoginUserDTO userDTO)
+        public async Task<IActionResult> Register([FromBody] DirectSigninUserDTO userDTO)
         {
             if (await _service.ExistsByEmail(userDTO.Email))
                 return BadRequest(new { email = "Email is already registered in our platform" });
