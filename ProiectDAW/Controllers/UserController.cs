@@ -1,7 +1,6 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ProiectDAW.DTOs;
-using ProiectDAW.Models;
+using ProiectDAW.Security.Attributes;
 using ProiectDAW.Services;
 using System.Threading.Tasks;
 
@@ -12,23 +11,38 @@ namespace ProiectDAW.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _service;
-        private readonly IMapper _mapper;
 
-        public UserController(IUserService service, IMapper mapper)
+        public UserController(IUserService service)
         {
             _service = service;
-            _mapper = mapper;
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] DirectSigninUserDTO userDTO)
         {
-            if (await _service.ExistsByEmail(userDTO.Email))
-                return BadRequest(new { email = "Email is already registered in our platform" });
+            var registerResult = await _service.Register(userDTO);
+            if (registerResult.IsError)
+                return BadRequest(registerResult.Error);
 
-            User u = _mapper.Map<User>(userDTO);
-            await _service.Create(u);
-            return Ok();
+            return Ok(new { token = registerResult.Token });
         }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] DirectLoginUserDTO userDTO)
+        {
+            var authenticationResult = await _service.Authenticate(userDTO);
+            if (authenticationResult.IsError)
+                return BadRequest(authenticationResult.Error);
+
+            return Ok(new { token = authenticationResult.Token });
+        }
+
+        [HttpGet("authorizedHello")]
+        [Authorization]
+        public IActionResult AuthorizedHello()
+        {
+            return Ok("Hello");
+        }
+
     }
 }

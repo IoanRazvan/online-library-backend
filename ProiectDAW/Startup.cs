@@ -29,6 +29,8 @@ namespace ProiectDAW
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProiectDAW", Version = "v1" });
             });
 
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.AddUtils();
             services.AddDbContext<NgReadingContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddAutoMapper(typeof(Startup));
             services.AddRepositories();
@@ -48,6 +50,8 @@ namespace ProiectDAW
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseMiddleware<JWTMiddleWare>();
 
             app.UseAuthorization();
 
