@@ -1,6 +1,6 @@
 ﻿using ProiectDAW.Models.Base;
-using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProiectDAW.Models
 {
@@ -18,5 +18,8 @@ namespace ProiectDAW.Models
         public ICollection<Review> Reviews { get; set; }
 
         public ICollection<Library> Libraries { get; set; }
+
+        [RegularExpression(@"Admin|User")]
+        public string UserRole { get; set; }
     }
 }
