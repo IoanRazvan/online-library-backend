@@ -10,6 +10,9 @@ namespace ProiectDAW.Models
         public Guid UserId { get; set; }
         public User User { get; set; }
 
-        public readonly static UserSettings DEFAULT_SETTINGS = new() { RememberPageNumber = false };
+        public static UserSettings GetDefaultSettings()
+        {
+            return new UserSettings() { RememberPageNumber = false };
+        }
     }
 }

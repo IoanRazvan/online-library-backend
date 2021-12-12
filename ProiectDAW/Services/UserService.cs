@@ -23,7 +23,7 @@ namespace ProiectDAW.Services
         public async Task<AuthenticationResult> Authenticate(DirectLoginUserDTO userDTO)
         {
             var user = await ((IUserRepository)_repo).FindByEmail(userDTO.Email);
-            var errorObject = new { Message = "Bad Credentials!" };
+            var errorObject = new { Message = "bad credentials" };
             if (user == null || !BCrypt.Net.BCrypt.Verify(userDTO.Password, user.DirectLoginUser.PasswordHash))
                 return new AuthenticationResult { IsError = true, Error = errorObject };
             return new AuthenticationResult { IsError = false, Token = _jwtUtilities.GenerateJWTToken(user) };
@@ -32,11 +32,11 @@ namespace ProiectDAW.Services
         public async Task<AuthenticationResult> Register(DirectSigninUserDTO userDTO)
         {
             if (await ((IUserRepository)_repo).ExistsByEmail(userDTO.Email))
-                return new AuthenticationResult { IsError = true, Error = new { Message = "Email is already registered within our app!" } };
+                return new AuthenticationResult { IsError = true, Error = new { Email = "email is already registered" } };
             User user = _mapper.Map<User>(userDTO);
             var created = await Create(user);
             if (!created)
-                return new AuthenticationResult { IsError = true, Error = new { Message = "User could not be created" } };
+                return new AuthenticationResult { IsError = true, Error = new { Message = "user could not be created" } };
             return new AuthenticationResult { IsError = false, Token = _jwtUtilities.GenerateJWTToken(user) };
         }
     }
