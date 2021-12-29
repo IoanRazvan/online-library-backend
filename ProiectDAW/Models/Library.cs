@@ -16,6 +16,6 @@ namespace ProiectDAW.Models
 
         public User Owner { get; set; }
 
-        public ICollection<LibraryBook> LibraryBooks { get; set; }
+        public ICollection<Book> Books { get; set; }
     }
 }

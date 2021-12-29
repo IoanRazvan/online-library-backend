@@ -11,10 +11,9 @@ namespace ProiectDAW.Data
         public DbSet<DirectLoginUser> DirectLoginUsers { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Library> Libraries { get; set; }
-        public DbSet<LibraryBook> LibraryBooks { get; set; }
         public DbSet<Genre> Genres { get; set; }
-        public DbSet<BookGenre> BookGenres { get; set; }
-        
+        public DbSet<Book> Books { get; set; }
+
         public NgReadingContext(DbContextOptions<NgReadingContext> options) : base(options)
         {
         }
@@ -44,29 +43,6 @@ namespace ProiectDAW.Data
                 .HasOne(review => review.Book)
                 .WithMany(book => book.Reviews);
 
-            builder.Entity<Library>()
-                .HasOne(library => library.Owner)
-                .WithMany(owner => owner.Libraries);
-
-            builder.Entity<LibraryBook>().HasKey(libraryBook => new { libraryBook.BookId, libraryBook.LibraryId });
-
-            builder.Entity<LibraryBook>()
-                .HasOne(libraryBook => libraryBook.Book)
-                .WithMany(book => book.LibraryBooks);
-
-            builder.Entity<LibraryBook>()
-                .HasOne(libraryBook => libraryBook.Library)
-                .WithMany(library => library.LibraryBooks);
-
-            builder.Entity<BookGenre>().HasKey(bookGenre => new { bookGenre.BookId, bookGenre.GenreId });
-
-            builder.Entity<BookGenre>()
-                .HasOne(bookGenre => bookGenre.Book)
-                .WithMany(book => book.BookGenres);
-
-            builder.Entity<BookGenre>()
-                .HasOne(bookGenre => bookGenre.Genre)
-                .WithMany(genre => genre.BookGenres);
 
             base.OnModelCreating(builder);
         }

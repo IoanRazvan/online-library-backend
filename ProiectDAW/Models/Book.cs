@@ -9,8 +9,12 @@ namespace ProiectDAW.Models
         public string Title { get; set; }
 
         public string Description { get; set; }
+
+        public string FilePath { get; set; }
         
-        public byte[] Content { get; set; }
+        public string CoverUrl { get; set; }
+
+        public string AuthorName { get; set; }
 
         public User Uploader { get; set; }
         
@@ -18,8 +22,8 @@ namespace ProiectDAW.Models
 
         public ICollection<Review> Reviews { get; set; }
 
-        public ICollection<LibraryBook> LibraryBooks { get; set; }
+        public ICollection<Library> LibraryBooks { get; set; }
 
-        public ICollection<BookGenre> BookGenres { get; set; }
+        public ICollection<Genre> Genres { get; set; }
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProiectDAW.Data;
 
 namespace ProiectDAW.Migrations
 {
     [DbContext(typeof(NgReadingContext))]
-    partial class NgReadingContextModelSnapshot : ModelSnapshot
+    [Migration("20211224172930_RemovedRedundantClassesAndRenamedFields")]
+    partial class RemovedRedundantClassesAndRenamedFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,7 +79,7 @@ namespace ProiectDAW.Migrations
 
                     b.HasIndex("UploaderId");
 
-                    b.ToTable("Books");
+                    b.ToTable("Book");
                 });
 
             modelBuilder.Entity("ProiectDAW.Models.DirectLoginUser", b =>
