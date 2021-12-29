@@ -15,27 +15,27 @@ namespace ProiectDAW.Repositories
             _table = context.Set<TEntity>();
         }
 
-        public void Create(TEntity entity)
+        public virtual void Create(TEntity entity)
         {
-            _table.Add(entity);
+            _table.Attach(entity);
         }
 
-        public async Task<bool> SaveAsync()
+        public virtual async Task<bool> Save()
         {
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public void Update(TEntity entity)
+        public virtual void Update(TEntity entity)
         {
             _table.Update(entity);
         }
 
-        public void Delete(TEntity entity)
+        public virtual void Delete(TEntity entity)
         {
             _table.Remove(entity);
         }
 
-        public async Task<TEntity> FindByIdAsync(object id)
+        public virtual async Task<TEntity> FindById(object id)
         {
             return await _table.FindAsync(id);
         }

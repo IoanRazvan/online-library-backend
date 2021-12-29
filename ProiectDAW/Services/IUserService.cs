@@ -1,14 +1,15 @@
 ﻿using ProiectDAW.DTOs;
 using ProiectDAW.Models;
-using ProiectDAW.Services.Types;
 using System.Threading.Tasks;
 
 namespace ProiectDAW.Services
 {
     public interface IUserService : IGenericService<User>
     {
-        Task<AuthenticationResult> Register(DirectSigninUserDTO user);
+        Task<string> Register(DirectSigninUserDTO user);
 
-        Task<AuthenticationResult> Authenticate(DirectLoginUserDTO user);
+        Task<string> Authenticate(DirectLoginUserDTO user);
+
+        Task<bool> ExistsByEmail(string email);
     }
 }

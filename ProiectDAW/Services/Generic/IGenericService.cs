@@ -10,6 +10,6 @@ namespace ProiectDAW.Services
 
         Task<bool> Update(TEntity entity);
 
-        Task<TEntity> Retrieve(object id);
+        Task<TEntity> Find(object id);
     }
 }

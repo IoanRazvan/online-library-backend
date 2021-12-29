@@ -27,7 +27,7 @@ namespace ProiectDAW.Utilities
 
             if (userId != Guid.Empty)
             {
-                httpContext.Items["User"] = await userService.Retrieve(userId);
+                httpContext.Items["User"] = await userService.Find(userId);
             }
 
             await _next(httpContext);

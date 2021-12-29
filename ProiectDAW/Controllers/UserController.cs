@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProiectDAW.DTOs;
-using ProiectDAW.Security.Attributes;
 using ProiectDAW.Services;
+using ProiectDAW.Services.Types;
 using System.Threading.Tasks;
 
 namespace ProiectDAW.Controllers
@@ -17,32 +17,26 @@ namespace ProiectDAW.Controllers
             _service = service;
         }
 
-        [HttpPost("register")]
+        [HttpPost]
         public async Task<IActionResult> Register([FromBody] DirectSigninUserDTO userDTO)
         {
-            var registerResult = await _service.Register(userDTO);
-            if (registerResult.IsError)
-                return BadRequest(registerResult.Error);
+            if (await _service.ExistsByEmail(userDTO.Email))
+                return BadRequest(ErrorBody.FromMessage("Email is already registred!"));
+            var token = await _service.Register(userDTO);
+            if (token == null)
+                return BadRequest(ErrorBody.FromMessage("Unable to register new user!"));
 
-            return Ok(new { token = registerResult.Token });
+            return Ok(new { token = token });
         }
 
-        [HttpPost("login")]
+        [HttpPost("authenticate")]
         public async Task<IActionResult> Login([FromBody] DirectLoginUserDTO userDTO)
         {
-            var authenticationResult = await _service.Authenticate(userDTO);
-            if (authenticationResult.IsError)
-                return BadRequest(authenticationResult.Error);
+            var token = await _service.Authenticate(userDTO);
+            if (token == null)
+                return BadRequest(ErrorBody.FromMessage("Bad Credentials!"));
 
-            return Ok(new { token = authenticationResult.Token });
+            return Ok(new { token = token });
         }
-
-        [HttpGet("authorizedHello")]
-        [Authorization]
-        public IActionResult AuthorizedHello()
-        {
-            return Ok("Hello");
-        }
-
     }
 }

@@ -6,12 +6,12 @@ namespace ProiectDAW.Repositories
     {
         void Create(TEntity entity);
 
-        Task<bool> SaveAsync();
+        Task<bool> Save();
 
         void Delete(TEntity entity);
 
         void Update(TEntity entity);
 
-        Task<TEntity> FindByIdAsync(object id);
+        Task<TEntity> FindById(object id);
     }
 }

@@ -12,27 +12,27 @@ namespace ProiectDAW.Services.Generic
             _repo = repo;
         }
 
-        public async Task<bool> Create(TEntity entity)
+        public async virtual Task<bool> Create(TEntity entity)
         {
             _repo.Create(entity);
-            return await _repo.SaveAsync();
+            return await _repo.Save();
         }
 
-        public async Task<bool> Delete(TEntity entity)
+        public async virtual Task<bool> Delete(TEntity entity)
         {
             _repo.Delete(entity);
-            return await _repo.SaveAsync();
+            return await _repo.Save();
         }
 
-        public async Task<TEntity> Retrieve(object id)
+        public async virtual Task<TEntity> Find(object id)
         {
-            return await _repo.FindByIdAsync(id);
+            return await _repo.FindById(id);
         }
 
-        public Task<bool> Update(TEntity entity)
+        public virtual Task<bool> Update(TEntity entity)
         {
             _repo.Update(entity);
-            return _repo.SaveAsync();
+            return _repo.Save();
         }
     }
 }
