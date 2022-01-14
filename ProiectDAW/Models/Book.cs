@@ -1,6 +1,7 @@
 ﻿using ProiectDAW.Models.Base;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProiectDAW.Models
 {
@@ -15,6 +16,9 @@ namespace ProiectDAW.Models
         public string CoverUrl { get; set; }
 
         public string AuthorName { get; set; }
+        
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime TimeOfUpload { get; set; }
 
         public User Uploader { get; set; }
         

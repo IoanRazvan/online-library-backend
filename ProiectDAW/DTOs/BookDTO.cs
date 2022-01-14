@@ -10,5 +10,6 @@ namespace ProiectDAW.DTOs
         public string Description { get; set; }
         public string CoverUrl { get; set; }
         public string AuthorName { get; set; }
+        public DateTime TimeOfUpload { get; set; }
     }
 }
