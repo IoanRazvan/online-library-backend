@@ -5,6 +5,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProiectDAW.Models
 {
+    public enum BookOrder
+    {
+        UPLOAD_TIME_ASCENDING = 1,
+        UPLOAD_TIME_DESCENDING = 2
+    }
+
     public class Book : BaseEntity
     {
         public string Title { get; set; }

@@ -5,6 +5,7 @@ using ProiectDAW.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace ProiectDAW.Repositories
@@ -15,33 +16,6 @@ namespace ProiectDAW.Repositories
         {
         }
 
-        public async Task<int> Count()
-        {
-            return await _table.CountAsync();
-        }
-
-        public async Task<int> CountByUploaderIdAndTitle(Guid uploaderId, string title)
-        {
-            return await _table.Where(book => book.UploaderId.Equals(uploaderId) && book.Title.ToLower().Contains(title.ToLower()))
-                                .CountAsync();
-        }
-
-        public async Task<List<Book>> FindByUploaderId(Guid uploaderId)
-        {
-            return await _table.Where(book => book.UploaderId.Equals(uploaderId))
-                                .Include(book => book.Genres)
-                                .ToListAsync();
-        }
-
-        public async Task<List<Book>> FindByUploaderIdAndTitlePaged(Guid uploaderId, string title, int pageSize, int page)
-        {
-            return await _table.Where(book => book.UploaderId.Equals(uploaderId) && book.Title.ToLower().Contains(title.ToLower()))
-                                .Include(book => book.Genres)
-                                .Skip(pageSize * page)
-                                .Take(pageSize)
-                                .ToListAsync();
-        }
-
         public async Task<Book> FindByIdAsNoTracking(Guid id)
         {
             return await _table.AsNoTracking().FirstOrDefaultAsync(book => book.Id.Equals(id));
@@ -50,6 +24,32 @@ namespace ProiectDAW.Repositories
         public override async Task<Book> FindById(object id)
         {
             return await _table.Include(book => book.Genres).FirstOrDefaultAsync(book => book.Id.Equals(id));
+        }
+
+        public async Task<List<Book>> FindByPredicatePaged(Expression<Func<Book, bool>> predicate, int pageSize, int page, BookOrder order)
+        {
+            var intermediaryQuery = _table.Where(predicate)
+                                          .Include(book => book.Genres);
+            IOrderedQueryable<Book> query;
+            if (order == BookOrder.UPLOAD_TIME_DESCENDING)
+                query = intermediaryQuery.OrderByDescending(book => book.TimeOfUpload);
+            else
+                query = intermediaryQuery.OrderBy(book => book.TimeOfUpload);
+
+            return await query.Skip(pageSize * page)
+                              .Take(pageSize)
+                              .ToListAsync();
+        }
+
+        public async Task<int> Count()
+        {
+            return await _table.CountAsync();
+        }
+
+        public async Task<int> CountByPredicate(Expression<Func<Book, bool>> predicate)
+        {
+            return await _table.Where(predicate)
+                               .CountAsync();
         }
     }
 }

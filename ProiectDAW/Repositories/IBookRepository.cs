@@ -1,20 +1,19 @@
 ﻿using ProiectDAW.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace ProiectDAW.Repositories
 {
     public interface IBookRepository : IGenericRepository<Book>
     {
-        Task<List<Book>> FindByUploaderId(Guid uploaderId);
+        Task<List<Book>> FindByPredicatePaged(Expression<Func<Book, bool>> predicate, int pageSize, int page, BookOrder order);
 
-        Task<List<Book>> FindByUploaderIdAndTitlePaged(Guid uploaderId, string title, int pageSize, int page);
+        Task<Book> FindByIdAsNoTracking(Guid id);
 
         Task<int> Count();
 
-        Task<int> CountByUploaderIdAndTitle(Guid uploaderId, string title);
-
-        Task<Book> FindByIdAsNoTracking(Guid id);
+        Task<int> CountByPredicate(Expression<Func<Book, bool>> predicate);
     }
 }

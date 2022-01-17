@@ -14,8 +14,12 @@ namespace ProiectDAW.Services
 
         Task<BookUploadsResponseDTO> Update(BookUploadsRequestDTO bookDTO);
 
-        Task<Page<BookUploadsResponseDTO>> FindByUploaderAndTitlePaged(string title, int pageSize, int page);
+        Task<Page<BookUploadsResponseDTO>> FindByUploaderAndTitlePaged(string title, int pageSize, int page, BookOrder order);
 
         Task<Book> FindAsNoTracking(Guid id);
+
+        Task<Page<BookUploadsResponseDTO>> FindByAuthorPaged(string author, int pageSize, int page, BookOrder order);
+
+        Task<Page<BookUploadsResponseDTO>> FindByTitlePaged(string title, int pageSize, int page, BookOrder order);
     }
 }

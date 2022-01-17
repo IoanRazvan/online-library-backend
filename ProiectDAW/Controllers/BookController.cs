@@ -76,7 +76,17 @@ namespace ProiectDAW.Controllers
         {
             if (q == null)
                 q = "";
-            return Ok(await _service.FindByUploaderAndTitlePaged(q, pageSize, page));
+            return Ok(await _service.FindByUploaderAndTitlePaged(q, pageSize, page, BookOrder.UPLOAD_TIME_ASCENDING));
+        }
+
+        [HttpGet("")]
+        [Authorization]
+        public async Task<IActionResult> GetBooks([FromQuery] int pageSize, [FromQuery]int page, [FromQuery]int order, [FromQuery]string field, [FromQuery]string q)
+        {
+            if (field == null || field.Equals("title"))
+                return Ok(await _service.FindByTitlePaged(q ?? "", pageSize, page, (BookOrder)order));
+            else
+                return Ok(await _service.FindByAuthorPaged(q ?? "", pageSize, page, (BookOrder)order));
         }
     }
 }

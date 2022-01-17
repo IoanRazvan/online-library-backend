@@ -14,5 +14,7 @@ namespace ProiectDAW.Services.Types
         public string Query { get; set; }
 
         public int PageSize { get; set; }
+
+        public int? Order { get; set; }
     }
 }
