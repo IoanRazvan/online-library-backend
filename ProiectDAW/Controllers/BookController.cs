@@ -88,5 +88,15 @@ namespace ProiectDAW.Controllers
             else
                 return Ok(await _service.FindByAuthorPaged(q ?? "", pageSize, page, (BookOrder)order));
         }
+
+        [HttpGet("{id}")]
+        [Authorization]
+        public async Task<IActionResult> GetBook([FromRoute] Guid id)
+        {
+            BookDetailsResponseDTO book = await _service.FindBookWithDetails(id);
+            if (book == null)
+                return NotFound();
+            else return Ok(book);
+        }
     }
 }

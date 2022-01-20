@@ -51,5 +51,27 @@ namespace ProiectDAW.Repositories
             return await _table.Where(predicate)
                                .CountAsync();
         }
+
+        public async Task<object> FindBookWithDetails(Guid id)
+        {
+            return await 
+            (
+                from book in _table
+                join review in _context.Reviews
+                on book equals review.Book into group1
+                from subBook in group1.DefaultIfEmpty()
+                where (book.Id.Equals(id))
+                group subBook by new { book.Id, book.Title, book.Description, book.AuthorName, book.CoverUrl } into group2
+                select new { 
+                    group2.Key.Id,
+                    group2.Key.Title,
+                    group2.Key.CoverUrl,
+                    group2.Key.Description,
+                    group2.Key.AuthorName,
+                    RatingCount = group2.Count(review => review != null),
+                    MeanRating = group2.Average(review => review == null ? 0 : review.Score)
+                }
+             ).FirstOrDefaultAsync();
+        }
     }
 }

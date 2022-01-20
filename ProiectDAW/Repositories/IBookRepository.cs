@@ -1,4 +1,5 @@
-﻿using ProiectDAW.Models;
+﻿using ProiectDAW.DTOs;
+using ProiectDAW.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -15,5 +16,7 @@ namespace ProiectDAW.Repositories
         Task<int> Count();
 
         Task<int> CountByPredicate(Expression<Func<Book, bool>> predicate);
+
+        Task<object> FindBookWithDetails(Guid id);
     }
 }

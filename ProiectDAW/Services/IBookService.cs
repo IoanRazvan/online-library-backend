@@ -21,5 +21,7 @@ namespace ProiectDAW.Services
         Task<Page<BookUploadsResponseDTO>> FindByAuthorPaged(string author, int pageSize, int page, BookOrder order);
 
         Task<Page<BookUploadsResponseDTO>> FindByTitlePaged(string title, int pageSize, int page, BookOrder order);
+
+        Task<BookDetailsResponseDTO> FindBookWithDetails(Guid id);
     }
 }

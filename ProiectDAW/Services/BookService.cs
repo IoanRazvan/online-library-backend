@@ -21,9 +21,11 @@ namespace ProiectDAW.Services
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMapper _mapper;
         private readonly IHostEnvironment _hostEnvironment;
+        private readonly IGenreRepository _genreRepo;
 
-        public BookService(IBookRepository repo, IMapper mapper, IHttpContextAccessor httpContextAccessor, IHostEnvironment hostEnvironment) : base(repo)
+        public BookService(IBookRepository repo, IGenreRepository genreRepo, IMapper mapper, IHttpContextAccessor httpContextAccessor, IHostEnvironment hostEnvironment) : base(repo)
         {
+            _genreRepo = genreRepo;
             _mapper = mapper;
             _httpContextAccessor = httpContextAccessor;
             _hostEnvironment = hostEnvironment;
@@ -182,6 +184,23 @@ namespace ProiectDAW.Services
         public async Task<Book> FindAsNoTracking(Guid id)
         {
             return await ((IBookRepository)_repo).FindByIdAsNoTracking(id);
+        }
+
+        public async Task<BookDetailsResponseDTO> FindBookWithDetails(Guid id)
+        {
+            dynamic obj = await ((IBookRepository)_repo).FindBookWithDetails(id);
+            if (obj == null)
+                return null;
+            return new BookDetailsResponseDTO {
+                Id = obj.Id,
+                Title = obj.Title,
+                CoverUrl = obj.CoverUrl,
+                Genres = _mapper.Map<List<GenreDTO>>(await _genreRepo.FindByBookId(id)),
+                AuthorName = obj.AuthorName,
+                Description = obj.Description,
+                MeanRating = obj.MeanRating,
+                RatingCount = obj.RatingCount
+            };  
         }
     }
 }
