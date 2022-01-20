@@ -20,6 +20,7 @@ namespace ProiectDAW.Profiles
             CreateMap<Book, BookUploadsResponseDTO>();
             CreateMap<Book, BookDTO>();
             CreateMap<GenreDTO, Genre>().ReverseMap();
+            CreateMap<Library, LibraryDTO>();
         }
     }
 }
