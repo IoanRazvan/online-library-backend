@@ -23,7 +23,7 @@ namespace ProiectDAW.Controllers
         [Authorization]
         public async Task<IActionResult> CreateBook([FromForm] BookUploadsRequestDTO bookDTO)
         {
-            var book = await _service.AddBook(bookDTO);
+            var book = await _service.Create(bookDTO);
             if (book == null)
                 return BadRequest(new { Message = "Couldn't save book" });
             return Ok(book);
@@ -46,7 +46,7 @@ namespace ProiectDAW.Controllers
             var book = await _service.Find(id);
             if (book == null)
                 return NotFound();
-            if (!_service.BookWasUploadedByPrincipal(book))
+            if (!_service.IsUploadedByPrincipal(book))
                 return Unauthorized();
             var success = await _service.Delete(book);
             if (!success)
@@ -61,7 +61,7 @@ namespace ProiectDAW.Controllers
             Book book = await _service.FindAsNoTracking(id);
             if (book == null)
                 return NotFound();
-            if (!_service.BookWasUploadedByPrincipal(book))
+            if (!_service.IsUploadedByPrincipal(book))
                 return Unauthorized();
             bookDTO.Id = book.Id;
             BookUploadsResponseDTO updated = await _service.Update(bookDTO);
@@ -93,7 +93,7 @@ namespace ProiectDAW.Controllers
         [Authorization]
         public async Task<IActionResult> GetBook([FromRoute] Guid id)
         {
-            BookDetailsResponseDTO book = await _service.FindBookWithDetails(id);
+            BookDetailsResponseDTO book = await _service.FindWithDetails(id);
             if (book == null)
                 return NotFound();
             else return Ok(book);

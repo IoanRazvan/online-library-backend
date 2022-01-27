@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace ProiectDAW.DTOs
 {
-    public class LibraryAssignmentUpdateDTO
+    public class ManyToManyUpdateDTO
     {
-        public Guid BookId { get; set; }
+        public Guid EntityId { get; set; }
 
         public List<Guid> Removed { get; set; }
 

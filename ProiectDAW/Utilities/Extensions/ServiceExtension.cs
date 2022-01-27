@@ -22,6 +22,7 @@ namespace ProiectDAW.Utilities
             services.AddTransient<IBookRepository, BookRepository>();
             services.AddTransient<IGenreRepository, GenreRepository>();
             services.AddTransient<ILibraryRepository, LibraryRepository>();
+            services.AddTransient<ILibraryBookRepository, LibraryBookRepository>();
             return services;
         }
 

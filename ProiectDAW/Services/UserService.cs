@@ -27,7 +27,7 @@ namespace ProiectDAW.Services
             return _jwtUtilities.GenerateJWTToken(user);
         }
 
-        public async Task<string> Register(DirectSigninUserDTO userDTO)
+        public async Task<string> Create(DirectSigninUserDTO userDTO)
         {
             User user = _mapper.Map<User>(userDTO);
             var created = await Create(user);

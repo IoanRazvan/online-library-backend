@@ -31,12 +31,12 @@ namespace ProiectDAW.Services
             _hostEnvironment = hostEnvironment;
         }
 
-        public bool BookWasUploadedByPrincipal(Book book)
+        public bool IsUploadedByPrincipal(Book book)
         {
             return _httpContextAccessor.GetPrincipal().Id.Equals(book.UploaderId);
         }
 
-        public async Task<BookUploadsResponseDTO> AddBook(BookUploadsRequestDTO bookDTO)
+        public async Task<BookUploadsResponseDTO> Create(BookUploadsRequestDTO bookDTO)
         {
             Book book = _mapper.Map<Book>(bookDTO);
             book.TimeOfUpload = DateTime.Now;
@@ -186,7 +186,7 @@ namespace ProiectDAW.Services
             return await ((IBookRepository)_repo).FindByIdAsNoTracking(id);
         }
 
-        public async Task<BookDetailsResponseDTO> FindBookWithDetails(Guid id)
+        public async Task<BookDetailsResponseDTO> FindWithDetails(Guid id)
         {
             dynamic obj = await ((IBookRepository)_repo).FindBookWithDetails(id);
             if (obj == null)

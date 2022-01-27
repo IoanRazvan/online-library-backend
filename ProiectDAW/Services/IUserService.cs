@@ -6,7 +6,7 @@ namespace ProiectDAW.Services
 {
     public interface IUserService : IGenericService<User>
     {
-        Task<string> Register(DirectSigninUserDTO user);
+        Task<string> Create(DirectSigninUserDTO user);
 
         Task<string> Authenticate(DirectLoginUserDTO user);
 

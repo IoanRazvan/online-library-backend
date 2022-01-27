@@ -8,9 +8,9 @@ namespace ProiectDAW.Services
 {
     public interface IBookService : IGenericService<Book>
     {
-        Task<BookUploadsResponseDTO> AddBook(BookUploadsRequestDTO bookDTO);
+        Task<BookUploadsResponseDTO> Create(BookUploadsRequestDTO bookDTO);
 
-        bool BookWasUploadedByPrincipal(Book book);
+        bool IsUploadedByPrincipal(Book book);
 
         Task<BookUploadsResponseDTO> Update(BookUploadsRequestDTO bookDTO);
 
@@ -22,6 +22,6 @@ namespace ProiectDAW.Services
 
         Task<Page<BookUploadsResponseDTO>> FindByTitlePaged(string title, int pageSize, int page, BookOrder order);
 
-        Task<BookDetailsResponseDTO> FindBookWithDetails(Guid id);
+        Task<BookDetailsResponseDTO> FindWithDetails(Guid id);
     }
 }

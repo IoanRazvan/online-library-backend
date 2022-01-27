@@ -8,10 +8,10 @@ namespace ProiectDAW.Services
 {
     public interface ILibraryService : IGenericService<Library>
     {
-        Task<List<LibraryDTO>> FindLibrariesOfPrincipal();
+        Task<List<LibraryDTO>> FindLibrariesByOwner();
 
-        Task<List<LibraryDTO>> FindLibrariesOfPrincipalThatContainBook(Guid bookId);
+        Task<List<LibraryDTO>> FindLibrariesByOwnerAndBook(Guid bookId);
 
-        Task<List<LibraryDTO>> UpdateLibraryAssignment(LibraryAssignmentUpdateDTO newLibraryAssignments);
+        Task<List<LibraryDTO>> UpdateLibraryBook(ManyToManyUpdateDTO newLibraryAssignments);
     }
 }

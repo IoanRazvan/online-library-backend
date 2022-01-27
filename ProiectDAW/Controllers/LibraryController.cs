@@ -22,16 +22,16 @@ namespace ProiectDAW.Controllers
         public async Task<IActionResult> GetLibraries([FromQuery] Guid bookId)
         {
             return Ok(new {
-               Libraries = await _service.FindLibrariesOfPrincipal(),
-               SelectedLibraries = await _service.FindLibrariesOfPrincipalThatContainBook(bookId)
+               Libraries = await _service.FindLibrariesByOwner(),
+               SelectedLibraries = await _service.FindLibrariesByOwnerAndBook(bookId)
            });
         }
 
         [HttpPost("")]
         [Authorization]
-        public async Task<IActionResult> UpdateLibraryAssignemnt([FromBody]LibraryAssignmentUpdateDTO newLibraryAssignments)
+        public async Task<IActionResult> UpdateLibraryBook([FromBody]ManyToManyUpdateDTO newLibraryAssignments)
         {
-            var result = await _service.UpdateLibraryAssignment(newLibraryAssignments);
+            var result = await _service.UpdateLibraryBook(newLibraryAssignments);
             if (result == null)
                 return BadRequest();
             return Ok(result);

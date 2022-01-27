@@ -22,7 +22,7 @@ namespace ProiectDAW.Controllers
         {
             if (await _service.ExistsByEmail(userDTO.Email))
                 return BadRequest(ErrorBody.FromMessage("Email is already registred!"));
-            var token = await _service.Register(userDTO);
+            var token = await _service.Create(userDTO);
             if (token == null)
                 return BadRequest(ErrorBody.FromMessage("Unable to register new user!"));
 
