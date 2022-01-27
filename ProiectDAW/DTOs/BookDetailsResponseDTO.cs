@@ -10,5 +10,7 @@ namespace ProiectDAW.DTOs
         public double MeanRating { get; set; }
 
         public double RatingCount { get; set; }
+
+        public string UploadedBy { get; set; }
     }
 }

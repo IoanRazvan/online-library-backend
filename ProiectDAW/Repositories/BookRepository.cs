@@ -61,13 +61,14 @@ namespace ProiectDAW.Repositories
                 on book equals review.Book into group1
                 from subBook in group1.DefaultIfEmpty()
                 where (book.Id.Equals(id))
-                group subBook by new { book.Id, book.Title, book.Description, book.AuthorName, book.CoverUrl } into group2
+                group subBook by new { book.Id, book.Uploader.FirstName, book.Uploader.LastName, book.Title, book.Description, book.AuthorName, book.CoverUrl } into group2
                 select new { 
                     group2.Key.Id,
                     group2.Key.Title,
                     group2.Key.CoverUrl,
                     group2.Key.Description,
                     group2.Key.AuthorName,
+                    UploadedBy = group2.Key.FirstName + " " + group2.Key.LastName,
                     RatingCount = group2.Count(review => review != null),
                     MeanRating = group2.Average(review => review == null ? 0 : review.Score)
                 }

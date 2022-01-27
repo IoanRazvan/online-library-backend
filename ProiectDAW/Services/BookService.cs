@@ -198,6 +198,7 @@ namespace ProiectDAW.Services
                 Genres = _mapper.Map<List<GenreDTO>>(await _genreRepo.FindByBookId(id)),
                 AuthorName = obj.AuthorName,
                 Description = obj.Description,
+                UploadedBy = obj.UploadedBy,
                 MeanRating = obj.MeanRating,
                 RatingCount = obj.RatingCount
             };  
