@@ -13,6 +13,7 @@ namespace ProiectDAW.Data
         public DbSet<Library> Libraries { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Book> Books { get; set; }
+        public DbSet<LibraryBook> LibrariesBooks { get; set; }
 
         public NgReadingContext(DbContextOptions<NgReadingContext> options) : base(options)
         {
@@ -43,6 +44,16 @@ namespace ProiectDAW.Data
                 .HasOne(review => review.Book)
                 .WithMany(book => book.Reviews);
 
+            builder.Entity<LibraryBook>()
+                .HasKey(libraryBook => new { libraryBook.LibraryId, libraryBook.BookId });
+
+            builder.Entity<LibraryBook>()
+                .HasOne(libraryBook => libraryBook.Book)
+                .WithMany(book => book.Libraries);
+
+            builder.Entity<LibraryBook>()
+                .HasOne(libraryBook => libraryBook.Library)
+                .WithMany(library => library.Books);
 
             base.OnModelCreating(builder);
         }

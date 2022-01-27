@@ -11,5 +11,7 @@ namespace ProiectDAW.Services
         Task<List<LibraryDTO>> FindLibrariesOfPrincipal();
 
         Task<List<LibraryDTO>> FindLibrariesOfPrincipalThatContainBook(Guid bookId);
+
+        Task<List<LibraryDTO>> UpdateLibraryAssignment(LibraryAssignmentUpdateDTO newLibraryAssignments);
     }
 }

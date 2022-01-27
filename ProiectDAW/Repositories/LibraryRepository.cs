@@ -20,5 +20,15 @@ namespace ProiectDAW.Repositories
             return await _table.Where(predicate)
                                .ToListAsync();
         }
+
+        public void RemoveAssignments(List<LibraryBook> assignments)
+        {
+            _context.LibrariesBooks.RemoveRange(assignments);
+        }
+
+        public void AddAssignments(List<LibraryBook> assignments)
+        {
+            _context.LibrariesBooks.AddRange(assignments);
+        }
     }
 }

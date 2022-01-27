@@ -32,7 +32,7 @@ namespace ProiectDAW.Models
 
         public ICollection<Review> Reviews { get; set; }
 
-        public ICollection<Library> LibraryBooks { get; set; }
+        public ICollection<LibraryBook> Libraries { get; set; }
 
         public ICollection<Genre> Genres { get; set; }
     }

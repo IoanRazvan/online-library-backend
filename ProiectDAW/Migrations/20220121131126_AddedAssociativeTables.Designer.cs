@@ -3,36 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProiectDAW.Data;
 
 namespace ProiectDAW.Migrations
 {
     [DbContext(typeof(NgReadingContext))]
-    partial class NgReadingContextModelSnapshot : ModelSnapshot
+    [Migration("20220121131126_AddedAssociativeTables")]
+    partial class AddedAssociativeTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("BookGenre", b =>
-                {
-                    b.Property<Guid>("BooksId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("GenresId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("BooksId", "GenresId");
-
-                    b.HasIndex("GenresId");
-
-                    b.ToTable("BookGenre");
-                });
 
             modelBuilder.Entity("ProiectDAW.Models.Book", b =>
                 {
@@ -67,6 +54,21 @@ namespace ProiectDAW.Migrations
                     b.HasIndex("UploaderId");
 
                     b.ToTable("Books");
+                });
+
+            modelBuilder.Entity("ProiectDAW.Models.BookGenre", b =>
+                {
+                    b.Property<Guid>("BookId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GenreId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("BookId", "GenreId");
+
+                    b.HasIndex("GenreId");
+
+                    b.ToTable("BooksGenres");
                 });
 
             modelBuilder.Entity("ProiectDAW.Models.DirectLoginUser", b =>
@@ -197,21 +199,6 @@ namespace ProiectDAW.Migrations
                     b.ToTable("UsersSettings");
                 });
 
-            modelBuilder.Entity("BookGenre", b =>
-                {
-                    b.HasOne("ProiectDAW.Models.Book", null)
-                        .WithMany()
-                        .HasForeignKey("BooksId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ProiectDAW.Models.Genre", null)
-                        .WithMany()
-                        .HasForeignKey("GenresId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ProiectDAW.Models.Book", b =>
                 {
                     b.HasOne("ProiectDAW.Models.User", "Uploader")
@@ -220,6 +207,25 @@ namespace ProiectDAW.Migrations
                         .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Uploader");
+                });
+
+            modelBuilder.Entity("ProiectDAW.Models.BookGenre", b =>
+                {
+                    b.HasOne("ProiectDAW.Models.Book", "Book")
+                        .WithMany("Genres")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProiectDAW.Models.Genre", "Genre")
+                        .WithMany("Books")
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("Genre");
                 });
 
             modelBuilder.Entity("ProiectDAW.Models.DirectLoginUser", b =>
@@ -295,9 +301,16 @@ namespace ProiectDAW.Migrations
 
             modelBuilder.Entity("ProiectDAW.Models.Book", b =>
                 {
+                    b.Navigation("Genres");
+
                     b.Navigation("Libraries");
 
                     b.Navigation("Reviews");
+                });
+
+            modelBuilder.Entity("ProiectDAW.Models.Genre", b =>
+                {
+                    b.Navigation("Books");
                 });
 
             modelBuilder.Entity("ProiectDAW.Models.Library", b =>
