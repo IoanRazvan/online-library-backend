@@ -11,5 +11,9 @@ namespace ProiectDAW.Services
         Task<string> Authenticate(DirectLoginUserDTO user);
 
         Task<bool> ExistsByEmail(string email);
+
+        UserDTO Find();
+
+        Task<bool> Update(UserDTO userInformation);
     }
 }

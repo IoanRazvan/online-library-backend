@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProiectDAW.DTOs;
+using ProiectDAW.Security.Attributes;
 using ProiectDAW.Services;
 using ProiectDAW.Services.Types;
 using System.Threading.Tasks;
@@ -37,6 +38,24 @@ namespace ProiectDAW.Controllers
                 return BadRequest(ErrorBody.FromMessage("Bad Credentials!"));
 
             return Ok(new { token = token });
+        }
+
+        [HttpGet]
+        [Authorization]
+        public IActionResult GetProfileInformation()
+        {
+            return Ok(_service.Find());
+        }
+
+        [HttpPut]
+        [Authorization]
+        public async Task<IActionResult> UpdateProfileInformation([FromBody] UserDTO userInformation)
+        {
+            // TODO add email check
+            if (!await _service.Update(userInformation))
+                return BadRequest();
+            return Ok();
+
         }
     }
 }

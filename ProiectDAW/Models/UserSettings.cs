@@ -7,6 +7,8 @@ namespace ProiectDAW.Models
     {
         public bool RememberPageNumber { get; set; }
 
+        public int NumberOfRecentBooks { get; set; }
+
         public Guid UserId { get; set; }
         public User User { get; set; }
 
