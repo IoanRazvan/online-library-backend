@@ -93,7 +93,7 @@ namespace ProiectDAW.Controllers
         [Authorization]
         public async Task<IActionResult> GetBook([FromRoute] Guid id)
         {
-            BookDetailsResponseDTO book = await _service.FindWithDetails(id);
+            BookDetailsDTO book = await _service.FindWithDetails(id);
             if (book == null)
                 return NotFound();
             else return Ok(book);

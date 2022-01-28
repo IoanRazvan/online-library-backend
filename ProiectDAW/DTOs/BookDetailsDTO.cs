@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ProiectDAW.DTOs
 {
-    public class BookDetailsResponseDTO : BookUploadsResponseDTO
+    public class BookDetailsDTO : BookUploadsResponseDTO
     {
         public double MeanRating { get; set; }
 

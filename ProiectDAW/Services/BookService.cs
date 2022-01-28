@@ -186,12 +186,12 @@ namespace ProiectDAW.Services
             return await ((IBookRepository)_repo).FindByIdAsNoTracking(id);
         }
 
-        public async Task<BookDetailsResponseDTO> FindWithDetails(Guid id)
+        public async Task<BookDetailsDTO> FindWithDetails(Guid id)
         {
             dynamic obj = await ((IBookRepository)_repo).FindBookWithDetails(id);
             if (obj == null)
                 return null;
-            return new BookDetailsResponseDTO {
+            return new BookDetailsDTO {
                 Id = obj.Id,
                 Title = obj.Title,
                 CoverUrl = obj.CoverUrl,
