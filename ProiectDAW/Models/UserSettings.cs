@@ -14,7 +14,7 @@ namespace ProiectDAW.Models
 
         public static UserSettings GetDefaultSettings()
         {
-            return new UserSettings() { RememberPageNumber = false };
+            return new UserSettings() { RememberPageNumber = false, NumberOfRecentBooks = 5 };
         }
     }
 }
