@@ -24,6 +24,7 @@ namespace ProiectDAW.Profiles
             CreateMap<LibraryBook, LibraryDTO>();
             CreateMap<UserSettings, UserSettingsDTO>();
             CreateMap<User, UserDTO>();
+            CreateMap<User, AdminEditableUserDTO>();
         }
     }
 }
