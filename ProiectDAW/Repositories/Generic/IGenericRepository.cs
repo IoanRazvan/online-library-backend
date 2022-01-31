@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace ProiectDAW.Repositories
+namespace ProiectDAW.Repositories.Generic
 {
     public interface IGenericRepository<TEntity> where TEntity : class
     {

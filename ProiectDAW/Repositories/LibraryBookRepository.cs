@@ -1,5 +1,6 @@
 ﻿using ProiectDAW.Data;
 using ProiectDAW.Models;
+using ProiectDAW.Repositories.Generic;
 using System.Collections.Generic;
 
 namespace ProiectDAW.Repositories

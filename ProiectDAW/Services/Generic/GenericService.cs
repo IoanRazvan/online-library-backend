@@ -1,4 +1,5 @@
 ﻿using ProiectDAW.Repositories;
+using ProiectDAW.Repositories.Generic;
 using System.Threading.Tasks;
 
 namespace ProiectDAW.Services.Generic

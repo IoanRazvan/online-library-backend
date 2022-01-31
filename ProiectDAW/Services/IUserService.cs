@@ -1,5 +1,6 @@
 ﻿using ProiectDAW.DTOs;
 using ProiectDAW.Models;
+using ProiectDAW.Services.Generic;
 using ProiectDAW.Services.Types;
 using System.Threading.Tasks;
 

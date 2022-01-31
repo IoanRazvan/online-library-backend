@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace ProiectDAW.Services
+namespace ProiectDAW.Services.Generic
 {
     public interface IGenericService<TEntity> where TEntity : class
     {

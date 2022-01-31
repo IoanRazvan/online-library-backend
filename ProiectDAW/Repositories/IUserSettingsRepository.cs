@@ -1,4 +1,5 @@
 ﻿using ProiectDAW.Models;
+using ProiectDAW.Repositories.Generic;
 
 namespace ProiectDAW.Repositories
 {

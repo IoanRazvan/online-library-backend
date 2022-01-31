@@ -1,4 +1,5 @@
 ﻿using ProiectDAW.Models;
+using ProiectDAW.Repositories.Generic;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

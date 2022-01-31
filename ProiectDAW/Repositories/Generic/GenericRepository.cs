@@ -2,7 +2,7 @@
 using ProiectDAW.Data;
 using System.Threading.Tasks;
 
-namespace ProiectDAW.Repositories
+namespace ProiectDAW.Repositories.Generic
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
