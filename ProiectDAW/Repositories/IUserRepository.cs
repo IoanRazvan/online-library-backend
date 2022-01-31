@@ -7,14 +7,10 @@ using System.Threading.Tasks;
 
 namespace ProiectDAW.Repositories
 {
-    public interface IUserRepository : IGenericRepository<User>
+    public interface IUserRepository : IPagedRepository<User>
     {
         Task<bool> ExistsByEmail(string email);
 
         Task<User> FindByEmail(string email);
-
-        Task<List<User>> FindByPredicatePaged(Expression<Func<User, bool>> predicate, int page, int pageSize);
-
-        Task<int> CountByPredicate(Expression<Func<User, bool>> predicate);
     }
 }

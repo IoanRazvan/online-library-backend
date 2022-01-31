@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ProiectDAW.Repositories
 {
-    public class BookRepository : GenericRepository<Book>, IBookRepository
+    public class BookRepository : PagedRepository<Book>, IBookRepository
     {
         public BookRepository(NgReadingContext context) : base(context)
         {
@@ -42,15 +42,14 @@ namespace ProiectDAW.Repositories
                               .ToListAsync();
         }
 
+        public override async Task<List<Book>> FindByPredicatePaged(Expression<Func<Book, bool>> predicate, int pageSize, int page) 
+        {
+            return await FindByPredicatePaged(predicate, pageSize, page, BookOrder.UPLOAD_TIME_ASCENDING);
+        }
+
         public async Task<int> Count()
         {
             return await _table.CountAsync();
-        }
-
-        public async Task<int> CountByPredicate(Expression<Func<Book, bool>> predicate)
-        {
-            return await _table.Where(predicate)
-                               .CountAsync();
         }
 
         public async Task<object> FindBookWithDetails(Guid id)

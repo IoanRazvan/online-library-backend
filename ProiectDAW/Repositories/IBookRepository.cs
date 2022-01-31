@@ -8,15 +8,13 @@ using System.Threading.Tasks;
 
 namespace ProiectDAW.Repositories
 {
-    public interface IBookRepository : IGenericRepository<Book>
+    public interface IBookRepository : IPagedRepository<Book>
     {
         Task<List<Book>> FindByPredicatePaged(Expression<Func<Book, bool>> predicate, int pageSize, int page, BookOrder order);
 
         Task<Book> FindByIdAsNoTracking(Guid id);
 
         Task<int> Count();
-
-        Task<int> CountByPredicate(Expression<Func<Book, bool>> predicate);
 
         Task<object> FindBookWithDetails(Guid id);
     }

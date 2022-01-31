@@ -10,16 +10,10 @@ using System.Threading.Tasks;
 
 namespace ProiectDAW.Repositories
 {
-    public class UserRepository : GenericRepository<User>, IUserRepository
+    public class UserRepository : PagedRepository<User>, IUserRepository
     {
         public UserRepository(NgReadingContext context) : base(context)
         {
-        }
-
-        public async Task<int> CountByPredicate(Expression<Func<User, bool>> predicate)
-        {
-            return await _table.Where(predicate)
-                               .CountAsync();
         }
 
         public async Task<bool> ExistsByEmail(string email)
@@ -39,7 +33,7 @@ namespace ProiectDAW.Repositories
                                .FirstOrDefaultAsync();                        
         }
 
-        public async Task<List<User>> FindByPredicatePaged(Expression<Func<User, bool>> predicate, int page, int pageSize)
+        public override async Task<List<User>> FindByPredicatePaged(Expression<Func<User, bool>> predicate, int page, int pageSize)
         {
             return await _table.Where(predicate)
                                .Skip(page * pageSize)
