@@ -20,6 +20,10 @@ namespace ProiectDAW.Services
         private readonly IJWTUtils _jwtUtilities;
         private readonly IHttpContextAccessor _httpContext;
 
+        public int BAD_CREDENTIALS => 1;
+
+        public int DISABLED_ACCOUNT => 2;
+
         public UserService(IUserRepository repo, IMapper mapper, IJWTUtils jwtUtilities, IHttpContextAccessor httpContext) : base(repo)
         {
             _mapper = mapper;
@@ -27,12 +31,14 @@ namespace ProiectDAW.Services
             _httpContext = httpContext;
         }
 
-        public async Task<string> Authenticate(DirectLoginUserDTO userDTO)
+        public async Task<AuthenticationResult> Authenticate(DirectLoginUserDTO userDTO)
         {
             var user = await ((IUserRepository)_repo).FindByEmail(userDTO.Email);
             if (user == null || !BCrypt.Net.BCrypt.Verify(userDTO.Password, user.DirectLoginUser.PasswordHash))
-                return null;
-            return _jwtUtilities.GenerateJWTToken(user);
+                return new AuthenticationResult(BAD_CREDENTIALS);
+            if (user.IsDisabled)
+                return new AuthenticationResult(DISABLED_ACCOUNT);
+            return new AuthenticationResult(_jwtUtilities.GenerateJWTToken(user));
         }
 
         public async Task<string> Create(DirectSigninUserDTO userDTO)

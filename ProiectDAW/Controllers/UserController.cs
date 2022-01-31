@@ -34,11 +34,15 @@ namespace ProiectDAW.Controllers
         [HttpPost("authenticate")]
         public async Task<IActionResult> Login([FromBody] DirectLoginUserDTO userDTO)
         {
-            var token = await _service.Authenticate(userDTO);
-            if (token == null)
-                return BadRequest(ErrorBody.FromMessage("Bad Credentials!"));
-
-            return Ok(new { token = token });
+            var result = await _service.Authenticate(userDTO);
+            if (result.IsError)
+            {
+                if (result.ErrorType == _service.BAD_CREDENTIALS)
+                    return BadRequest(ErrorBody.FromMessage("Bad Credentials!"));
+                else
+                    return BadRequest(ErrorBody.FromMessage("This account has been disabled!"));
+            }
+            return Ok(new { token = result.Token});
         }
 
         [HttpGet]

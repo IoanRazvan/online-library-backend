@@ -7,9 +7,12 @@ namespace ProiectDAW.Services
 {
     public interface IUserService : IGenericService<User>
     {
+        int BAD_CREDENTIALS { get; }
+        int DISABLED_ACCOUNT { get; }
+
         Task<string> Create(DirectSigninUserDTO user);
 
-        Task<string> Authenticate(DirectLoginUserDTO user);
+        Task<AuthenticationResult> Authenticate(DirectLoginUserDTO user);
 
         Task<bool> ExistsByEmail(string email);
 
