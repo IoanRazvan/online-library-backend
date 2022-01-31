@@ -21,5 +21,7 @@ namespace ProiectDAW.Models
 
         [RegularExpression(@"Admin|User")]
         public string UserRole { get; set; }
+
+        public bool IsDisabled { get; set; }
     }
 }
