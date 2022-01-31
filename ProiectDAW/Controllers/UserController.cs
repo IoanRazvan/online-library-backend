@@ -3,6 +3,7 @@ using ProiectDAW.DTOs;
 using ProiectDAW.Security.Attributes;
 using ProiectDAW.Services;
 using ProiectDAW.Services.Types;
+using System;
 using System.Threading.Tasks;
 
 namespace ProiectDAW.Controllers
@@ -56,6 +57,43 @@ namespace ProiectDAW.Controllers
                 return BadRequest();
             return Ok();
 
+        }
+
+        [HttpGet("admin")]
+        [Authorization("Admin")]
+        public async Task<IActionResult> GetUsers([FromQuery] int page, [FromQuery] int pageSize, [FromQuery] string q)
+        {
+            return Ok(await _service.FindAllExceptPrincipalPaged(page, pageSize, q ?? ""));
+        }
+
+        [HttpPut("admin")]
+        [Authorization("Admin")]
+        public async Task<IActionResult> EditUser([FromBody] UserEventDTO userEvent)
+        {
+            var user = await _service.Find(userEvent.Id);
+
+            if (user == null)
+                return NotFound();
+            else if (user.UserRole.Equals("Admin") || _service.IsPrincipal(user))
+                return Unauthorized();
+            AdminEditableUserDTO updatedUser;
+            switch (userEvent.Operation)
+            {
+                case "promote":
+                    updatedUser = await _service.PromoteUser(user);
+                    break;
+                case "disable":
+                    updatedUser = await _service.DisableUser(user);
+                    break;
+                case "enable":
+                    updatedUser = await _service.EnableUser(user);
+                    break;
+                default:
+                    return BadRequest();
+            }
+            if (updatedUser == null)
+                return BadRequest();
+            return Ok(updatedUser);
         }
     }
 }
