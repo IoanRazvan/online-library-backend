@@ -163,7 +163,7 @@ namespace ProiectDAW.Services
             List<Book> result = await ((IBookRepository)_repo).FindByPredicatePaged(predicate, pageSize, page, order);
             int totalRecords = await ((IBookRepository)_repo).CountByPredicate(predicate);
             List<BookUploadsResponseDTO> mapped = _mapper.Map<List<Book>, List<BookUploadsResponseDTO>>(result);
-            int lastPage = ComputeLastPage(totalRecords, pageSize);
+            int lastPage = PageUtils.ComputeLastPage(totalRecords, pageSize);
             return new Page<BookUploadsResponseDTO>
             {
                 CurrentPageNumber = page,
@@ -173,12 +173,6 @@ namespace ProiectDAW.Services
                 Order = (int)order,
                 PageSize = pageSize
             };
-        }
-
-        private static int ComputeLastPage(int totalRecords, int pageSize)
-        {
-            int result = (int)Math.Ceiling((double)totalRecords / pageSize) - 1;
-            return result < 0 ? 0 : result;
         }
 
         public async Task<Book> FindAsNoTracking(Guid id)

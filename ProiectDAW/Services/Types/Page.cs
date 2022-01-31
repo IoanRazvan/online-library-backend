@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 
 namespace ProiectDAW.Services.Types
@@ -16,5 +17,14 @@ namespace ProiectDAW.Services.Types
         public int PageSize { get; set; }
 
         public int? Order { get; set; }
+    }
+
+    public class PageUtils
+    {
+        public static int ComputeLastPage(int totalRecords, int pageSize)
+        {
+            int result = (int)Math.Ceiling((double)totalRecords / pageSize) - 1;
+            return result < 0 ? 0 : result;
+        }
     }
 }
