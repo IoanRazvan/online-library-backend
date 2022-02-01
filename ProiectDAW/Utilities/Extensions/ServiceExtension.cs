@@ -14,6 +14,7 @@ namespace ProiectDAW.Utilities
             services.AddTransient<IGenreService, GenreService>();
             services.AddTransient<ILibraryService, LibraryService>();
             services.AddTransient<IUserSettingsService, UserSettingsService>();
+            services.AddTransient<IReviewRepository, ReviewRepository>();
             return services;
         }
 
@@ -25,6 +26,7 @@ namespace ProiectDAW.Utilities
             services.AddTransient<ILibraryRepository, LibraryRepository>();
             services.AddTransient<ILibraryBookRepository, LibraryBookRepository>();
             services.AddTransient<IUserSettingsRepository, UserSettingsRepository>();
+            services.AddTransient<IReviewService, ReviewService>();
             return services;
         }
 
