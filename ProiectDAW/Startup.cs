@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using ProiectDAW.Data;
 using ProiectDAW.Utilities;
+using System.IO;
 
 namespace ProiectDAW
 {
@@ -47,6 +48,12 @@ namespace ProiectDAW
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ProiectDAW v1"));
+            }
+
+            var path = Path.Combine(env.ContentRootPath, "uploads");
+            if (!File.Exists(path))
+            {
+                Directory.CreateDirectory(path);
             }
 
             app.UseHttpsRedirection();
